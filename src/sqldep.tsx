@@ -18,7 +18,7 @@ interface PathContentItem {
 
 function loadDirectory(paths: Array<String>) {
     return new Promise((resolve, reject) => {
-        fs.readdir(paths.at(-1), (err, files) => {
+        fs.readdir(paths.at(-1).toString(), (err, files) => {
             if (err) {
                 reject(err);
                 return;
@@ -126,7 +126,7 @@ export default function SQLDEP() {
         if (pref.search_path !== undefined && pref.search_path !== "") {
             console.log(pref.search_path)
             setPaths([...paths, pref.search_path])
-            loadDirectory([...paths, pref.search_path]).then((content) => {
+            loadDirectory([...paths, pref.search_path]).then((content:PathContentItem[]) => {
                 console.log(content)
                 setPathContent(content)
                 transistionService.send("DONE");
@@ -154,12 +154,12 @@ export default function SQLDEP() {
                                 <ActionPanel>
                                     {element.stats.isDirectory() ? <Action title="Open Folder" onAction={() => {
                                         console.log(paths.at(-1) + element.name + "/")
-                                        loadDirectory([...paths, paths.at(-1) + element.name + "/"]).then((content) => {
+                                        loadDirectory([...paths, paths.at(-1) + element.name + "/"]).then((content:PathContentItem[]) => {
                                             setPaths([...paths, paths.at(-1) + element.name + "/"])
                                             setPathContent(content)
                                         })
                                     }} /> : <><Action title="Open File" onAction={() => {
-                                        readFile(paths.at(-1) + "/" + element.name).then((content) => {
+                                        readFile(paths.at(-1) + "/" + element.name).then((content:string) => {
                                             transistionService.send("SEND_REQUEST")
                                             sendRequest(content).then((value) => {
                                                 setResponse(value.data);
@@ -173,7 +173,7 @@ export default function SQLDEP() {
                                         })
                                     }} />
                                     <Action title="Open File with column level lineage" onAction={() => {
-                                        readFile(paths.at(-1) + "/" + element.name).then((content) => {
+                                        readFile(paths.at(-1) + "/" + element.name).then((content:string) => {
                                             transistionService.send("SEND_REQUEST")
                                             sendColumnRequest(content).then((value) => {
                                                 setResponse(value.data);
