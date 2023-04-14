@@ -14,8 +14,19 @@
       "mode": "view"
     }
   ],
+  "preferences": [
+    {
+      "name": "search_path",
+      "type": "textfield",
+      "description": "The root path where all your sql files are in.",
+      "required": false,
+      "title": "File path"
+    }
+  ],
   "dependencies": {
-    "@raycast/api": "^1.48.5"
+    "@raycast/api": "^1.48.5",
+    "axios": "^1.3.5",
+    "xstate": "^4.37.1"
   },
   "devDependencies": {
     "@types/node": "18.8.3",
