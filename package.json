@@ -19,7 +19,7 @@
       "name": "search_path",
       "type": "textfield",
       "description": "The root path where all your sql files are in.",
-      "required": false,
+      "required": true,
       "title": "File path"
     }
   ],
